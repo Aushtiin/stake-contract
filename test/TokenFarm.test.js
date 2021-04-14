@@ -8,7 +8,7 @@ require('chai')
   .should()
 
 
-function tokens(n){
+function tokens(n) {
   return web3.utils.toWei(n, 'ether')
 }
 
@@ -20,10 +20,10 @@ contract('TokenFarm', ([owner, investor]) => {
     tokenFarm = await TokenFarm.new(dappToken.address, daiToken.address);
 
     //transfer all Dapp tokens to farm(1million)
-  await dappToken.transfer(tokenFarm.address, tokens('1000000'));
+    await dappToken.transfer(tokenFarm.address, tokens('1000000'));
 
-  //send tokens to investor
-  await daiToken.transfer(investor, tokens('100'), { from: owner })
+    //send tokens to investor
+    await daiToken.transfer(investor, tokens('100'), { from: owner })
   })
 
   describe("Mock Dai Deployment", async () => {
@@ -33,14 +33,14 @@ contract('TokenFarm', ([owner, investor]) => {
     })
   })
 
-  describe('Dapp Token Deployment', async() => {
+  describe('Dapp Token Deployment', async () => {
     it('has a name', async () => {
       const name = await dappToken.name();
       assert.equal(name, 'DApp Token');
     })
   })
 
-  describe('Token Farm Deployment', async() => {
+  describe('Token Farm Deployment', async () => {
     it('has a name', async () => {
       const name = await tokenFarm.name();
       assert.equal(name, 'Dapp Token Farm');
@@ -60,8 +60,8 @@ contract('TokenFarm', ([owner, investor]) => {
       result = await daiToken.balanceOf(investor)
       assert.equal(result.toString(), tokens('100'), 'investor mock dai wallet balance correct before staking');
 
-      await daiToken.approve(tokenFarm.address, tokens('100'), { from: investor});
-      await tokenFarm.stakeTokens(tokens('100'), { from: investor});
+      await daiToken.approve(tokenFarm.address, tokens('100'), { from: investor });
+      await tokenFarm.stakeTokens(tokens('100'), { from: investor });
 
       //check staking result 
       result = await daiToken.balanceOf(investor)
